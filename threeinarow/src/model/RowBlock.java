@@ -1,7 +1,7 @@
 package model;
 
 import controller.BoardController;
-import view.View;
+import view.BoardView;
 
 /**
  * Created by chungyang on 2/12/20.
@@ -18,25 +18,13 @@ public abstract class RowBlock {
      */
     protected String contents;
 
-    /**
-     * Whether or not it is currently legal to move into this block
-     */
-    protected boolean isLegalMove;
 
-
-    public abstract void registerView(View view);
+    public abstract void registerView(BoardView view);
 
     public abstract void notifyViews();
 
-    public abstract void removeView(View view);
+    public abstract void removeView(BoardView view);
 
-    public void setIsLegalMove(boolean isLegalMove) {
-        this.isLegalMove = isLegalMove;
-    }
-
-    public boolean getIsLegalMove() {
-        return this.isLegalMove;
-    }
 
     /**
      * Returns the non-null String value of the contents of this block.
@@ -53,7 +41,10 @@ public abstract class RowBlock {
      */
     public void reset() {
         this.contents = "";
-        this.isLegalMove = false;
+    }
+
+    public boolean isLegalMove(){
+        return this.contents.equals("");
     }
 
     /**

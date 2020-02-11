@@ -13,18 +13,18 @@ import java.awt.event.*;
 
 public class ThreeInARowGame implements BoardController {
 
-    public static final String GAME_END_NOWINNER = "Game ends in a draw";
+    private static final String GAME_END_NOWINNER = "Game ends in a draw";
 
-    public JFrame gui = new JFrame("Three in a Row");
-    public ThreeInARowBlock[][] blocksData = new ThreeInARowBlock[3][3];
-    public JButton[][] blocks = new JButton[3][3];
-    public JButton reset = new JButton("Reset");
-    public JTextArea playerturn = new JTextArea();
+    private JFrame gui = new JFrame("Three in a Row");
+    private ThreeInARowBlock[][] blocksData = new ThreeInARowBlock[3][3];
+    private JButton[][] blocks = new JButton[3][3];
+    private JButton reset = new JButton("Reset");
+    private JTextArea playerturn = new JTextArea();
     /**
      * The current player taking their turn
      */
-    public String player = "1";
-    public int movesLeft = 9;
+    private String player = "1";
+    private int movesLeft = 9;
 
     /**
      * Starts a new game in the GUI.
