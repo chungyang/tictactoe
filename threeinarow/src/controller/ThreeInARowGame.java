@@ -1,3 +1,7 @@
+package controller;
+
+import model.ThreeInARowBlock;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JTextArea;
@@ -5,14 +9,10 @@ import javax.swing.JPanel;
 import java.awt.*;
 import java.awt.event.*;
 
-/**
- * Java implementation of the 3 in a row game, using the Swing framework.
- *
- * This quick-and-dirty implementation violates a number of software engineering
- * principles and needs a thorough overhaul to improve readability,
- * extensibility, and testability.
- */
-public class ThreeInARowGame {
+
+
+public class ThreeInARowGame implements BoardController {
+
     public static final String GAME_END_NOWINNER = "Game ends in a draw";
 
     public JFrame gui = new JFrame("Three in a Row");
@@ -89,7 +89,7 @@ public class ThreeInARowGame {
      *
      * @param block The block to be moved to by the current player
      */
-    protected void move(JButton block) {
+    public void move(JButton block) {
 	--movesLeft;
 	if(movesLeft%2 == 1) {
 	    playerturn.setText("'X': Player 1");
