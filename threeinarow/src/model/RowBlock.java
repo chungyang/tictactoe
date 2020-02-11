@@ -1,6 +1,7 @@
 package model;
 
 import controller.BoardController;
+import view.View;
 
 /**
  * Created by chungyang on 2/12/20.
@@ -22,6 +23,12 @@ public abstract class RowBlock {
      */
     protected boolean isLegalMove;
 
+
+    public abstract void registerView(View view);
+
+    public abstract void notifyViews();
+
+    public abstract void removeView(View view);
 
     public void setIsLegalMove(boolean isLegalMove) {
         this.isLegalMove = isLegalMove;
