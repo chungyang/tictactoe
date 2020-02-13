@@ -1,29 +1,16 @@
 package model;
 
-import controller.BoardController;
-import view.BoardView;
-
 /**
  * Created by chungyang on 2/12/20.
  */
 public abstract class RowBlock {
 
     /**
-     * The game that contains this block
-     */
-    protected BoardController boardController;
-
-    /**
      * The current value of the contents of this block
      */
     protected String contents;
 
-
-    public abstract void registerView(BoardView view);
-
-    public abstract void notifyViews();
-
-    public abstract void removeView(BoardView view);
+    protected boolean isLegalMove;
 
 
     /**
@@ -43,9 +30,6 @@ public abstract class RowBlock {
         this.contents = "";
     }
 
-    public boolean isLegalMove(){
-        return this.contents.equals("");
-    }
 
     /**
      * Sets the contents of this block to the given value.
@@ -60,7 +44,14 @@ public abstract class RowBlock {
         this.contents = value;
     }
 
-    public BoardController getBoardController(){
-        return this.boardController;
+
+    public void setIsLegalMove(boolean isLegal){
+        this.isLegalMove = isLegal;
     }
+
+    public boolean getIsLegalMove(){
+        return this.isLegalMove;
+    }
+
+
 }

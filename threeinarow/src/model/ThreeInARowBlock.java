@@ -1,6 +1,5 @@
 package model;
 
-import controller.BoardController;
 import view.BoardView;
 
 import java.util.ArrayList;
@@ -17,13 +16,8 @@ public class ThreeInARowBlock extends RowBlock
     private final int row;
     private final int col;
 
-    public ThreeInARowBlock(BoardController boardController, int row, int col) {
+    public ThreeInARowBlock(int row, int col) {
 
-        if (boardController == null) {
-            throw new IllegalArgumentException("The game must be non-null.");
-        }
-
-        this.boardController = boardController;
         this.observingViews = new ArrayList<>();
         this.row = row;
         this.col = col;
@@ -31,18 +25,4 @@ public class ThreeInARowBlock extends RowBlock
     }
 
 
-    @Override
-    public void registerView(BoardView view) {
-        this.observingViews.add(view);
-    }
-
-    @Override
-    public void notifyViews() {
-
-    }
-
-    @Override
-    public void removeView(BoardView view) {
-        this.observingViews.remove(view);
-    }
 }

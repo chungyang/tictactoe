@@ -1,4 +1,4 @@
-import controller.ThreeInARowGame;
+import controller.InARowController;
 import model.ThreeInARowBlock;
 import org.junit.After;
 import org.junit.Before;
@@ -9,11 +9,11 @@ import static org.junit.Assert.*;
  * An example test class, which merely shows how to write JUnit tests.
  */
 public class TestExample {
-    private ThreeInARowGame game;
+    private InARowController game;
 
     @Before
     public void setUp() {
-	game = new ThreeInARowGame();
+	game = new InARowController();
     }
 
     @After
