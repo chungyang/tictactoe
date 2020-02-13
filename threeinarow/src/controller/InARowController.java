@@ -1,6 +1,6 @@
 package controller;
 
-import model.ThreeInARowBlock;
+import model.RowBlock;
 import view.BoardView;
 
 import javax.swing.JButton;
@@ -36,7 +36,7 @@ public class InARowController {
 	private BoardView boardView;
 
 	private JFrame gui = new JFrame("Three in a Row");
-	private ThreeInARowBlock[][] blocksData = new ThreeInARowBlock[3][3];
+	private RowBlock[][] blocksData = new RowBlock[3][3];
 	private JButton[][] blocks = new JButton[3][3];
 	private JButton reset = new JButton("Reset");
 	private JTextArea playerturn = new JTextArea();
@@ -54,27 +54,25 @@ public class InARowController {
 		game.gui.setVisible(true);
 	}
 
-	public InARowController(BoardView boardView){
+	public InARowController(BoardView boardView, int rowNumber, int colNumber){
 		this.boardView = boardView;
+		this.boardView.addResetButtonListener(new ResetController());
+
+		for(int row = 0; row < rowNumber; row++){
+			for(int col = 0; col < colNumber; col++){
+				blocksData[row][col] = new RowBlock(row, col);
+				this.boardView.addBlockButtonListener(new BlockController(), row, col);
+			}
+
+		}
+
+
 	}
 
 	/**
 	 * Creates a new game initializing the GUI.
 	 */
 	public InARowController() {
-
-		this.boardView.addResetButtonListener(new ResetController());
-
-
-
-
-
-
-
-
-
-
-
 		gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		gui.setSize(new Dimension(500, 350));
 		gui.setResizable(true);
@@ -105,7 +103,7 @@ public class InARowController {
 		for(int row = 0; row<3; row++) {
 			for(int column = 0; column<3 ;column++) {
 
-				blocksData[row][column] = new ThreeInARowBlock(row, column);
+				blocksData[row][column] = new RowBlock(row, column);
 				// The last row contains the legal moves
 				blocksData[row][column].setContents("");
 				blocksData[row][column].setIsLegalMove(row == 2);
@@ -541,6 +539,14 @@ public class InARowController {
 			player = "1";
 			movesLeft = 9;
 			playerturn.setText("Player 1 to play 'X'");
+
+		}
+	}
+
+	final class BlockController implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
 
 		}
 	}

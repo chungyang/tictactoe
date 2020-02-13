@@ -9,7 +9,7 @@ import java.awt.event.ActionListener;
 /**
  * Created by chungyang on 2/12/20.
  */
-public class ThreeInARowBoardView implements BoardView {
+public class InARowBoardView implements BoardView {
 
     private static final String GAME_END_NOWINNER = "Game ends in a draw";
     private static final String PLAYER_1_WIN_MESSAGE = "Player 1 wins!";
@@ -35,7 +35,7 @@ public class ThreeInARowBoardView implements BoardView {
     private BlockButton reset = new BlockButton("Reset");
     private JTextArea playerturn = new JTextArea();
 
-    public ThreeInARowBoardView(){
+    public InARowBoardView(){
 
         gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         gui.setSize(new Dimension(500, 350));

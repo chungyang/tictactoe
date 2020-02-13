@@ -1,5 +1,5 @@
 import controller.InARowController;
-import model.ThreeInARowBlock;
+import model.RowBlock;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -29,6 +29,6 @@ public class TestExample {
 
     @Test(expected = IllegalArgumentException.class)
     public void testNewBlockViolatesPrecondition() {
-	ThreeInARowBlock block = new ThreeInARowBlock(null);
+	RowBlock block = new RowBlock(null);
     }
 }

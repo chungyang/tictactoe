@@ -1,9 +1,20 @@
 package model;
 
 /**
- * Created by chungyang on 2/12/20.
+ * The model.RowBlock class represents a given block in the game.
  */
-public abstract class RowBlock {
+public class RowBlock {
+
+    private final int row;
+    private final int col;
+
+    public RowBlock(int row, int col) {
+
+        this.row = row;
+        this.col = col;
+        this.reset();
+    }
+
 
     /**
      * The current value of the contents of this block
