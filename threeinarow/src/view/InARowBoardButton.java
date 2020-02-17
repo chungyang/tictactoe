@@ -1,41 +1,25 @@
 package view;
 
 import model.BlockButton;
+import model.Player;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
+
 /**
  * Created by chungyang on 2/12/20.
  */
-public class InARowBoardView implements BoardView {
+public class InARowBoardButton implements BoardButton, ResetButton, TextView {
 
-    private static final String GAME_END_NOWINNER = "Game ends in a draw";
-    private static final String PLAYER_1_WIN_MESSAGE = "Player 1 wins!";
-    private static final String PLAYER_2_WIN_MESSAGE = "Player 2 wins!";
-
-
-    private enum Player{
-        PLAYER_1("X"), PLAYER_2("O");
-
-        private final String mark;
-
-        Player(String mark){
-            this.mark = mark;
-        }
-
-        public String getMark(){
-            return this.mark;
-        }
-    }
 
     private JFrame gui = new JFrame("Three in a Row");
     private BlockButton[][] blocks = new BlockButton[3][3];
     private BlockButton reset = new BlockButton("Reset");
     private JTextArea playerturn = new JTextArea();
 
-    public InARowBoardView(){
+    public InARowBoardButton(int maxRowNumber, int maxColNumber){
 
         gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         gui.setSize(new Dimension(500, 350));
@@ -57,8 +41,35 @@ public class InARowBoardView implements BoardView {
         messages.add(playerturn);
         playerturn.setText("Player 1 to play " + Player.PLAYER_1.getMark());
 
+
+        for(int row = 0; row < maxRowNumber; row++) {
+            for (int col = 0; col < maxColNumber; col++) {
+                blocks[row][col] = new BlockButton(row, col);
+                blocks[row][col].setPreferredSize(new Dimension(75,75));
+                game.add(blocks[row][col]);
+            }
+        }
+
+        gui.setVisible(true);
     }
 
+    public JTextArea getPlayerturn() {
+        return playerturn;
+    }
+
+    @Override
+    public BlockButton getResetButton(){
+        return reset;
+    }
+
+    @Override
+    public JFrame getGui(){
+        return gui;
+    }
+
+    public BlockButton getBlockButton(int row, int col){
+        return blocks[row][col];
+    }
 
     @Override
     public void addResetButtonListener(ActionListener listener) {
@@ -80,4 +91,13 @@ public class InARowBoardView implements BoardView {
         blocks[row][col].removeActionListener(listener);
     }
 
+    @Override
+    public JTextArea getTextView() {
+        return playerturn;
+    }
+
+    @Override
+    public void setTextView(String text) {
+        this.playerturn.setText(text);
+    }
 }
