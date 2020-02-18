@@ -11,15 +11,15 @@ import java.awt.event.ActionListener;
 /**
  * Created by chungyang on 2/12/20.
  */
-public class InARowBoardButton implements BoardButton, ResetButton, TextView {
+public class InARowBoardButtonViewView implements BoardButtonView, ResetButtonView, TextView {
 
 
     private JFrame gui = new JFrame("Three in a Row");
-    private BlockButton[][] blocks = new BlockButton[3][3];
+    private BlockButton[][] blocks;
     private BlockButton reset = new BlockButton("Reset");
     private JTextArea playerturn = new JTextArea();
 
-    public InARowBoardButton(int maxRowNumber, int maxColNumber){
+    public InARowBoardButtonViewView(int boardSize){
 
         gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         gui.setSize(new Dimension(500, 350));
@@ -41,9 +41,10 @@ public class InARowBoardButton implements BoardButton, ResetButton, TextView {
         messages.add(playerturn);
         playerturn.setText("Player 1 to play " + Player.PLAYER_1.getMark());
 
+        blocks = new BlockButton[boardSize][boardSize];
 
-        for(int row = 0; row < maxRowNumber; row++) {
-            for (int col = 0; col < maxColNumber; col++) {
+        for(int row = 0; row < boardSize; row++) {
+            for (int col = 0; col < boardSize; col++) {
                 blocks[row][col] = new BlockButton(row, col);
                 blocks[row][col].setPreferredSize(new Dimension(75,75));
                 game.add(blocks[row][col]);
@@ -99,5 +100,10 @@ public class InARowBoardButton implements BoardButton, ResetButton, TextView {
     @Override
     public void setTextView(String text) {
         this.playerturn.setText(text);
+    }
+
+    @Override
+    public void setEnabled(boolean enabled, int row, int col){
+        blocks[row][col].setEnabled(enabled);
     }
 }

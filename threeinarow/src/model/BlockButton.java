@@ -18,4 +18,12 @@ public class BlockButton extends JButton{
     public BlockButton(String buttonText){
         super(buttonText);
     }
+
+    public int getRow(){
+        return this.row;
+    }
+
+    public int getColumn(){
+        return this.col;
+    }
 }
