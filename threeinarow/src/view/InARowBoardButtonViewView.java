@@ -26,7 +26,7 @@ public class InARowBoardButtonViewView implements BoardButtonView, ResetButtonVi
         gui.setResizable(true);
 
         JPanel gamePanel = new JPanel(new FlowLayout());
-        JPanel game = new JPanel(new GridLayout(3,3));
+        JPanel game = new JPanel(new GridLayout(boardSize,boardSize));
         gamePanel.add(game, BorderLayout.CENTER);
 
         JPanel options = new JPanel(new FlowLayout());

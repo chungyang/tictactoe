@@ -11,12 +11,12 @@ import java.awt.event.*;
 
 public class InARowController {
 
-	private static final String GAME_END_NOWINNER = "Game ends in a draw";
-	private static final String PLAYER_1_WIN_MESSAGE = "Player 1 wins!";
-	private static final String PLAYER_2_WIN_MESSAGE = "Player 2 wins!";
+	public static final String GAME_END_NOWINNER = "Game ends in a draw";
+	public static final String PLAYER_1_WIN_MESSAGE = "Player 1 wins!";
+	public static final String PLAYER_2_WIN_MESSAGE = "Player 2 wins!";
 
 	private BoardView boardView;
-	private RowBlock[][] blocksData = new RowBlock[3][3];
+	private RowBlock[][] blocksData;
 
 	private int boardSize = 3;
 
@@ -38,8 +38,11 @@ public class InARowController {
 
 		this.boardView = boardView;
 		addResetButtonListener((ResetButtonView) boardView);
-		for(int row = 0; row < boardSize; row++){
-			for(int col = 0; col < boardSize; col++){
+
+		blocksData = new RowBlock[boardSize][boardSize];
+
+		for (int row = 0; row < boardSize; row++) {
+			for (int col = 0; col < boardSize; col++) {
 				blocksData[row][col] = new RowBlock(row, col);
 				addBoardButtonListener((BoardButtonView) boardView, row, col);
 				blocksData[row][col].setContents("");
@@ -82,13 +85,35 @@ public class InARowController {
 		textView.setTextView(player.getMark() + ": Player " + player.getId());
 	}
 
+	public void reset(){
+
+		/**
+		 * Resets the game to be able to start playing again.
+		 */
+
+		for(int row = 0; row < boardSize; row++) {
+			for(int column = 0;column < boardSize;column++) {
+				blocksData[row][column].reset();
+				// Enable the bottom row
+				blocksData[row][column].setIsLegalMove(row == boardSize - 1);
+				updateBlock((BoardButtonView) boardView, row,column);
+			}
+		}
+		player = Player.PLAYER_1;
+		movesLeft = (int) Math.pow(boardSize, 2);
+		TextView textView = (TextView) boardView;
+		textView.setTextView("Player 1 to play " + Player.PLAYER_1.getMark());
+
+	}
+	
+	public void setBlocksData(RowBlock[][] blocksData){
+		this.blocksData = blocksData;
+	}
+
 
 	/**
 	 * Updates the block at the given row and column
 	 * after one of the player's moves.
-	 *
-	 * @param row The row that contains the block
-	 * @param column The column that contains the block
 	 */
 	protected void updateBlock(BoardButtonView boardButtonView, int row, int column) {
 		BlockButton blockButton = boardButtonView.getBlockButton(row, column);
@@ -122,6 +147,7 @@ public class InARowController {
 
 		return true;
 	}
+
 
 	private boolean checkVerticalRow(BlockButton blockButton){
 
@@ -207,22 +233,7 @@ public class InARowController {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 
-			/**
-			 * Resets the game to be able to start playing again.
-			 */
 
-			for(int row = 0; row < boardSize; row++) {
-				for(int column = 0;column < boardSize;column++) {
-					blocksData[row][column].reset();
-					// Enable the bottom row
-					blocksData[row][column].setIsLegalMove(row == boardSize - 1);
-					updateBlock((BoardButtonView) boardView, row,column);
-				}
-			}
-			player = Player.PLAYER_1;
-			movesLeft = (int) Math.pow(boardSize, 2);
-			TextView textView = (TextView) boardView;
-			textView.setTextView("Player 1 to play " + Player.PLAYER_1.getMark());
 		}
 	}
 
