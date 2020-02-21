@@ -1,4 +1,4 @@
-import controller.InARowController;
+import controller.ThreeInARowController;
 import model.Player;
 import model.RowBlock;
 import org.junit.After;
@@ -6,7 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 import view.BoardButtonView;
 import view.BoardView;
-import view.InARowBoardButtonViewView;
+import view.ThreeInARowBoardView;
 import view.TextView;
 
 import static org.junit.Assert.*;
@@ -15,14 +15,14 @@ import static org.junit.Assert.*;
  * An example test class, which merely shows how to write JUnit tests.
  */
 public class TestExample {
-    private InARowController controller;
+    private ThreeInARowController controller;
     private BoardView view;
 
     @Before
     public void setUp() {
-        view = new InARowBoardButtonViewView(3);
+        view = new ThreeInARowBoardView(3,3);
         view.getGui().setVisible(false);
-        controller = new InARowController(view);
+        controller = new ThreeInARowController(view,3,3);
 
     }
 
@@ -44,6 +44,23 @@ public class TestExample {
         controller.move(((BoardButtonView) view).getBlockButton(2, 0));
 
         assertEquals(((TextView) view).getTextView().getText(), controller.PLAYER_1_WIN_MESSAGE);
+        controller.reset();
+    }
+
+    /**
+     * Test controller's logic of checking a no win situation when a vertical row
+     * doesn't have the same marker.
+     */
+    @Test
+    public void testVerticalRowNoWinCondition() {
+        RowBlock[][] blockdata = getCleanBlockData(3);
+        blockdata[0][0].setContents(Player.PLAYER_2.getMark());
+        blockdata[1][0].setContents(Player.PLAYER_2.getMark());
+        controller.setBlocksData(blockdata);
+        controller.move(((BoardButtonView) view).getBlockButton(2, 0));
+
+        assertNotEquals(((TextView) view).getTextView().getText(), controller.PLAYER_2_WIN_MESSAGE);
+        controller.reset();
     }
 
 
@@ -59,6 +76,41 @@ public class TestExample {
         controller.move(((BoardButtonView) view).getBlockButton(1, 2));
 
         assertEquals(((TextView) view).getTextView().getText(), controller.PLAYER_1_WIN_MESSAGE);
+        controller.reset();
+
+    }
+
+    /**
+     * Test controller's logic of checking a win by connecting anti diagonal blocks
+     */
+    @Test
+    public void testAntiDiagonalWinCondition() {
+        RowBlock[][] blockdata = getCleanBlockData(3);
+        blockdata[2][0].setContents(Player.PLAYER_1.getMark());
+        blockdata[1][1].setContents(Player.PLAYER_1.getMark());
+        controller.setBlocksData(blockdata);
+        controller.move(((BoardButtonView) view).getBlockButton(0, 2));
+
+        assertEquals(((TextView) view).getTextView().getText(), controller.PLAYER_1_WIN_MESSAGE);
+        controller.reset();
+
+    }
+
+
+    /**
+     * Test controller's logic of checking a win by connecting anti diagonal blocks
+     */
+    @Test
+    public void testMainDiagonalWinCondition() {
+        RowBlock[][] blockdata = getCleanBlockData(3);
+        blockdata[0][0].setContents(Player.PLAYER_1.getMark());
+        blockdata[1][1].setContents(Player.PLAYER_1.getMark());
+        controller.setBlocksData(blockdata);
+        controller.move(((BoardButtonView) view).getBlockButton(2, 2));
+
+        assertEquals(((TextView) view).getTextView().getText(), controller.PLAYER_1_WIN_MESSAGE);
+        controller.reset();
+
     }
 //
 //    @Test(expected = IllegalArgumentException.class)

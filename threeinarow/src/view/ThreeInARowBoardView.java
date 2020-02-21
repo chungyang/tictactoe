@@ -11,7 +11,7 @@ import java.awt.event.ActionListener;
 /**
  * Created by chungyang on 2/12/20.
  */
-public class InARowBoardButtonViewView implements BoardButtonView, ResetButtonView, TextView {
+public class ThreeInARowBoardView implements BoardButtonView, ResetButtonView, TextView {
 
 
     private JFrame gui = new JFrame("Three in a Row");
@@ -19,14 +19,14 @@ public class InARowBoardButtonViewView implements BoardButtonView, ResetButtonVi
     private BlockButton reset = new BlockButton("Reset");
     private JTextArea playerturn = new JTextArea();
 
-    public InARowBoardButtonViewView(int boardSize){
+    public ThreeInARowBoardView(int rowSize, int columnSize){
 
         gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         gui.setSize(new Dimension(500, 350));
         gui.setResizable(true);
 
         JPanel gamePanel = new JPanel(new FlowLayout());
-        JPanel game = new JPanel(new GridLayout(boardSize,boardSize));
+        JPanel game = new JPanel(new GridLayout(rowSize,columnSize));
         gamePanel.add(game, BorderLayout.CENTER);
 
         JPanel options = new JPanel(new FlowLayout());
@@ -41,10 +41,10 @@ public class InARowBoardButtonViewView implements BoardButtonView, ResetButtonVi
         messages.add(playerturn);
         playerturn.setText("Player 1 to play " + Player.PLAYER_1.getMark());
 
-        blocks = new BlockButton[boardSize][boardSize];
+        blocks = new BlockButton[rowSize][columnSize];
 
-        for(int row = 0; row < boardSize; row++) {
-            for (int col = 0; col < boardSize; col++) {
+        for(int row = 0; row < rowSize; row++) {
+            for (int col = 0; col < columnSize; col++) {
                 blocks[row][col] = new BlockButton(row, col);
                 blocks[row][col].setPreferredSize(new Dimension(75,75));
                 game.add(blocks[row][col]);
