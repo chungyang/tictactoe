@@ -111,6 +111,10 @@ public class ThreeInARowController {
 		this.blocksData = blocksData;
 	}
 
+	public Player getPlayer(){return this.player;}
+
+	public int getMovesLeft(){return this.movesLeft;}
+
 
 	/**
 	 * Updates the block at the given row and column

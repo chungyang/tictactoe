@@ -22,7 +22,7 @@ public class TestExample {
     public void setUp() {
         view = new ThreeInARowBoardView(3,3);
         view.getGui().setVisible(false);
-        controller = new ThreeInARowController(view,3,3);
+        controller = new ThreeInARowController(view,3, 3);
 
     }
 
@@ -32,14 +32,25 @@ public class TestExample {
         view = null;
     }
 
+    @Test
+    public void testNewGame() {
+        assertEquals (Player.PLAYER_1, controller.getPlayer());
+        assertEquals (9, controller.getMovesLeft());
+    }
+
+
+
     /**
      * Test controller's logic of checking a win by connecting a vertical row
      */
     @Test
     public void testVerticalRowWinCondition() {
-        RowBlock[][] blockdata = getCleanBlockData(3);
+        RowBlock[][] blockdata = getCleanBlockData(3, 3);
         blockdata[0][0].setContents(Player.PLAYER_1.getMark());
         blockdata[1][0].setContents(Player.PLAYER_1.getMark());
+
+        assertEquals(controller.getPlayer(), Player.PLAYER_1);
+
         controller.setBlocksData(blockdata);
         controller.move(((BoardButtonView) view).getBlockButton(2, 0));
 
@@ -53,9 +64,12 @@ public class TestExample {
      */
     @Test
     public void testVerticalRowNoWinCondition() {
-        RowBlock[][] blockdata = getCleanBlockData(3);
+        RowBlock[][] blockdata = getCleanBlockData(3, 3);
         blockdata[0][0].setContents(Player.PLAYER_2.getMark());
         blockdata[1][0].setContents(Player.PLAYER_2.getMark());
+
+        assertEquals(controller.getPlayer(), Player.PLAYER_1);
+
         controller.setBlocksData(blockdata);
         controller.move(((BoardButtonView) view).getBlockButton(2, 0));
 
@@ -69,9 +83,12 @@ public class TestExample {
      */
     @Test
     public void testHorizontalRowWinCondition() {
-        RowBlock[][] blockdata = getCleanBlockData(3);
+        RowBlock[][] blockdata = getCleanBlockData(3, 3);
         blockdata[1][0].setContents(Player.PLAYER_1.getMark());
         blockdata[1][1].setContents(Player.PLAYER_1.getMark());
+
+        assertEquals(controller.getPlayer(), Player.PLAYER_1);
+
         controller.setBlocksData(blockdata);
         controller.move(((BoardButtonView) view).getBlockButton(1, 2));
 
@@ -81,13 +98,35 @@ public class TestExample {
     }
 
     /**
+     * Test controller's logic of checking a win by connecting a horizontal row
+     */
+    @Test
+    public void testHorizontalRowNoWinCondition() {
+        RowBlock[][] blockdata = getCleanBlockData(3, 3);
+        blockdata[1][0].setContents(Player.PLAYER_2.getMark());
+        blockdata[1][1].setContents(Player.PLAYER_2.getMark());
+
+        assertEquals(controller.getPlayer(), Player.PLAYER_1);
+
+        controller.setBlocksData(blockdata);
+        controller.move(((BoardButtonView) view).getBlockButton(1, 2));
+
+        assertNotEquals(((TextView) view).getTextView().getText(), controller.PLAYER_2_WIN_MESSAGE);
+        controller.reset();
+
+    }
+
+    /**
      * Test controller's logic of checking a win by connecting anti diagonal blocks
      */
     @Test
     public void testAntiDiagonalWinCondition() {
-        RowBlock[][] blockdata = getCleanBlockData(3);
+        RowBlock[][] blockdata = getCleanBlockData(3, 3);
         blockdata[2][0].setContents(Player.PLAYER_1.getMark());
         blockdata[1][1].setContents(Player.PLAYER_1.getMark());
+
+        assertEquals(controller.getPlayer(), Player.PLAYER_1);
+
         controller.setBlocksData(blockdata);
         controller.move(((BoardButtonView) view).getBlockButton(0, 2));
 
@@ -101,10 +140,34 @@ public class TestExample {
      * Test controller's logic of checking a win by connecting anti diagonal blocks
      */
     @Test
+    public void testAntiDiagonalNoWinCondition() {
+        RowBlock[][] blockdata = getCleanBlockData(3, 3);
+        blockdata[2][0].setContents(Player.PLAYER_2.getMark());
+        blockdata[1][1].setContents(Player.PLAYER_2.getMark());
+
+        assertEquals(controller.getPlayer(), Player.PLAYER_1);
+
+        controller.setBlocksData(blockdata);
+        controller.move(((BoardButtonView) view).getBlockButton(0, 2));
+
+        assertNotEquals(((TextView) view).getTextView().getText(), controller.PLAYER_2_WIN_MESSAGE);
+        controller.reset();
+
+    }
+
+
+
+    /**
+     * Test controller's logic of checking a win by connecting anti diagonal blocks
+     */
+    @Test
     public void testMainDiagonalWinCondition() {
-        RowBlock[][] blockdata = getCleanBlockData(3);
+        RowBlock[][] blockdata = getCleanBlockData(3, 3);
         blockdata[0][0].setContents(Player.PLAYER_1.getMark());
         blockdata[1][1].setContents(Player.PLAYER_1.getMark());
+
+        assertEquals(controller.getPlayer(), Player.PLAYER_1);
+
         controller.setBlocksData(blockdata);
         controller.move(((BoardButtonView) view).getBlockButton(2, 2));
 
@@ -112,21 +175,40 @@ public class TestExample {
         controller.reset();
 
     }
-//
-//    @Test(expected = IllegalArgumentException.class)
-//    public void testNewBlockViolatesPrecondition() {
-//        RowBlock block = new RowBlock(null);
-//    }
+
+    /**
+     * Test controller's logic of checking a win by connecting anti diagonal blocks
+     * */
+    @Test
+    public void testMainDiagonalNoWinCondition() {
+        RowBlock[][] blockdata = getCleanBlockData(3, 3);
+        blockdata[0][0].setContents(Player.PLAYER_2.getMark());
+        blockdata[1][1].setContents(Player.PLAYER_2.getMark());
+
+        controller.setBlocksData(blockdata);
+        controller.move(((BoardButtonView) view).getBlockButton(2, 2));
+
+        assertNotEquals(((TextView) view).getTextView().getText(), controller.PLAYER_1_WIN_MESSAGE);
+        controller.reset();
+
+    }
 
 
-    private RowBlock[][] getCleanBlockData(int size){
-        RowBlock[][] blockdata = new RowBlock[size][size];
+    @Test(expected = IllegalArgumentException.class)
+    public void testRowBlockContentPrecondition() {
+        RowBlock block = new RowBlock(1, 1);
+        block.setContents(null);
+    }
 
-        for (int row = 0; row < size; row++) {
-            for (int col = 0; col < size; col++) {
-                blockdata[row][col] = new RowBlock(row, col);
-                blockdata[row][col].setContents("");
-                blockdata[row][col].setIsLegalMove(row == size - 1);
+
+    private RowBlock[][] getCleanBlockData(int row, int col){
+        RowBlock[][] blockdata = new RowBlock[row][col];
+
+        for (int r = 0; r < row; r++) {
+            for (int c = 0; c < col; c++) {
+                blockdata[r][c] = new RowBlock(r, c);
+                blockdata[r][c].setContents("");
+                blockdata[r][c].setIsLegalMove(true);
             }
         }
 
