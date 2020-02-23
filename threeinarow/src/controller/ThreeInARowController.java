@@ -33,8 +33,9 @@ public class ThreeInARowController {
 	 * Starts a new game in the GUI.
 	 */
 	public static void main(String[] args) {
-		int row = args != null && args.length == 1? Integer.valueOf(args[0]) : 3;
+		int row = args != null && args.length == 2? Integer.valueOf(args[0]) : 3;
 		int col = args != null && args.length == 2? Integer.valueOf(args[1]) : 3;
+
 		BoardView gameView = new ThreeInARowBoardView(row, col);
 		ThreeInARowController gameController = new ThreeInARowController(gameView, row, col);
 	}
