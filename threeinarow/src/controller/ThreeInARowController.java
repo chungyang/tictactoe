@@ -148,7 +148,7 @@ public class ThreeInARowController {
 		final String currentPlayerMark = player.getMark();
 		int count = 0;
 
-		for (int col = 0; col < columnSize; col++) {
+		for (int col = 0; col < columnSize && count != 3; col++) {
 			if (blocksData[row][col].getContents().equals(currentPlayerMark)) {
 				count++;
 			} else {
@@ -166,7 +166,7 @@ public class ThreeInARowController {
 		final String currentPlayerMark = player.getMark();
 		int count = 0;
 
-		for (int row = 0; row < rowSize; row++) {
+		for (int row = 0; row < rowSize && count != 3; row++) {
 			if (blocksData[row][col].getContents().equals(currentPlayerMark)) {
 				count++;
 			} else {
@@ -200,7 +200,7 @@ public class ThreeInARowController {
 
 		int count = 0;
 
-		while (startingRow < this.rowSize && startingCol < this.columnSize) {
+		while (startingRow < this.rowSize && startingCol < this.columnSize && count != 3) {
 			if (blocksData[startingRow][startingCol].getContents().equals(currentPlayerMark)) {
 				count++;
 			} else {
@@ -225,12 +225,12 @@ public class ThreeInARowController {
 		final String currentPlayerMark = player.getMark();
 		final int sum = row + col;
 
-		int startingRow = sum > (rowSize - 1) ? sum - (rowSize - 1) : sum;
+		int startingRow = sum > (rowSize - 1) ? rowSize - 1 : sum;
 		int startingCol = sum - startingRow;
 
 		int count = 0;
 
-		while (startingRow >= 0 && startingCol < this.columnSize) {
+		while (startingRow >= 0 && startingCol < this.columnSize && count != 3) {
 
 			if (blocksData[startingRow][startingCol].getContents().equals(currentPlayerMark)) {
 				count++;

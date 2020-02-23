@@ -17,12 +17,14 @@ import static org.junit.Assert.*;
 public class TestExample {
     private ThreeInARowController controller;
     private BoardView view;
+    private int row = 3;
+    private int col = 3;
 
     @Before
     public void setUp() {
-        view = new ThreeInARowBoardView(3,3);
+        view = new ThreeInARowBoardView(row,col);
         view.getGui().setVisible(false);
-        controller = new ThreeInARowController(view,3, 3);
+        controller = new ThreeInARowController(view,row, col);
 
     }
 
@@ -45,7 +47,7 @@ public class TestExample {
      */
     @Test
     public void testVerticalRowWinCondition() {
-        RowBlock[][] blockdata = getCleanBlockData(3, 3);
+        RowBlock[][] blockdata = getCleanBlockData();
         blockdata[0][0].setContents(Player.PLAYER_1.getMark());
         blockdata[1][0].setContents(Player.PLAYER_1.getMark());
 
@@ -64,7 +66,7 @@ public class TestExample {
      */
     @Test
     public void testVerticalRowNoWinCondition() {
-        RowBlock[][] blockdata = getCleanBlockData(3, 3);
+        RowBlock[][] blockdata = getCleanBlockData();
         blockdata[0][0].setContents(Player.PLAYER_2.getMark());
         blockdata[1][0].setContents(Player.PLAYER_2.getMark());
 
@@ -83,7 +85,7 @@ public class TestExample {
      */
     @Test
     public void testHorizontalRowWinCondition() {
-        RowBlock[][] blockdata = getCleanBlockData(3, 3);
+        RowBlock[][] blockdata = getCleanBlockData();
         blockdata[1][0].setContents(Player.PLAYER_1.getMark());
         blockdata[1][1].setContents(Player.PLAYER_1.getMark());
 
@@ -102,7 +104,7 @@ public class TestExample {
      */
     @Test
     public void testHorizontalRowNoWinCondition() {
-        RowBlock[][] blockdata = getCleanBlockData(3, 3);
+        RowBlock[][] blockdata = getCleanBlockData();
         blockdata[1][0].setContents(Player.PLAYER_2.getMark());
         blockdata[1][1].setContents(Player.PLAYER_2.getMark());
 
@@ -121,7 +123,7 @@ public class TestExample {
      */
     @Test
     public void testAntiDiagonalWinCondition() {
-        RowBlock[][] blockdata = getCleanBlockData(3, 3);
+        RowBlock[][] blockdata = getCleanBlockData();
         blockdata[2][0].setContents(Player.PLAYER_1.getMark());
         blockdata[1][1].setContents(Player.PLAYER_1.getMark());
 
@@ -141,7 +143,7 @@ public class TestExample {
      */
     @Test
     public void testAntiDiagonalNoWinCondition() {
-        RowBlock[][] blockdata = getCleanBlockData(3, 3);
+        RowBlock[][] blockdata = getCleanBlockData();
         blockdata[2][0].setContents(Player.PLAYER_2.getMark());
         blockdata[1][1].setContents(Player.PLAYER_2.getMark());
 
@@ -162,7 +164,7 @@ public class TestExample {
      */
     @Test
     public void testMainDiagonalWinCondition() {
-        RowBlock[][] blockdata = getCleanBlockData(3, 3);
+        RowBlock[][] blockdata = getCleanBlockData();
         blockdata[0][0].setContents(Player.PLAYER_1.getMark());
         blockdata[1][1].setContents(Player.PLAYER_1.getMark());
 
@@ -181,7 +183,7 @@ public class TestExample {
      * */
     @Test
     public void testMainDiagonalNoWinCondition() {
-        RowBlock[][] blockdata = getCleanBlockData(3, 3);
+        RowBlock[][] blockdata = getCleanBlockData();
         blockdata[0][0].setContents(Player.PLAYER_2.getMark());
         blockdata[1][1].setContents(Player.PLAYER_2.getMark());
 
@@ -201,7 +203,7 @@ public class TestExample {
     }
 
 
-    private RowBlock[][] getCleanBlockData(int row, int col){
+    private RowBlock[][] getCleanBlockData(){
         RowBlock[][] blockdata = new RowBlock[row][col];
 
         for (int r = 0; r < row; r++) {
