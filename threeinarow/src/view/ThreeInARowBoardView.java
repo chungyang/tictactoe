@@ -39,7 +39,7 @@ public class ThreeInARowBoardView implements BoardButtonView, ResetButtonView, T
         gui.add(messages, BorderLayout.SOUTH);
 
         messages.add(playerturn);
-        playerturn.setText("Player 1 to play " + Player.PLAYER_1.getMark());
+        playerturn.setText("Player 1 to play " + Player.PLAYER_1.getMarker());
 
         blocks = new BlockButton[rowSize][columnSize];
 

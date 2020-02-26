@@ -1,6 +1,8 @@
 import controller.ThreeInARowController;
+import model.AbstractGameBoard;
 import model.Player;
 import model.RowBlock;
+import model.ThreeInARowGameBoard;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -47,13 +49,13 @@ public class TestExample {
      */
     @Test
     public void testVerticalRowWinCondition() {
-        RowBlock[][] blockdata = getCleanBlockData();
-        blockdata[0][0].setContents(Player.PLAYER_1.getMark());
-        blockdata[1][0].setContents(Player.PLAYER_1.getMark());
+        AbstractGameBoard gameBoard = new ThreeInARowGameBoard(row, col);
+        gameBoard.placeMarker(0, 0, Player.PLAYER_1.getMarker());
+        gameBoard.placeMarker(1, 0, Player.PLAYER_1.getMarker());
 
         assertEquals(controller.getPlayer(), Player.PLAYER_1);
 
-        controller.setBlocksData(blockdata);
+        controller.setGameBoard(gameBoard);
         controller.move(((BoardButtonView) view).getBlockButton(2, 0));
 
         assertEquals(((TextView) view).getTextView().getText(), controller.PLAYER_1_WIN_MESSAGE);
@@ -66,13 +68,13 @@ public class TestExample {
      */
     @Test
     public void testVerticalRowNoWinCondition() {
-        RowBlock[][] blockdata = getCleanBlockData();
-        blockdata[0][0].setContents(Player.PLAYER_2.getMark());
-        blockdata[1][0].setContents(Player.PLAYER_2.getMark());
+        AbstractGameBoard gameBoard = new ThreeInARowGameBoard(row, col);
+        gameBoard.placeMarker(0, 0, Player.PLAYER_1.getMarker());
+        gameBoard.placeMarker(1, 0, Player.PLAYER_1.getMarker());
 
         assertEquals(controller.getPlayer(), Player.PLAYER_1);
 
-        controller.setBlocksData(blockdata);
+        controller.setGameBoard(gameBoard);
         controller.move(((BoardButtonView) view).getBlockButton(2, 0));
 
         assertNotEquals(((TextView) view).getTextView().getText(), controller.PLAYER_2_WIN_MESSAGE);
@@ -85,13 +87,14 @@ public class TestExample {
      */
     @Test
     public void testHorizontalRowWinCondition() {
-        RowBlock[][] blockdata = getCleanBlockData();
-        blockdata[1][0].setContents(Player.PLAYER_1.getMark());
-        blockdata[1][1].setContents(Player.PLAYER_1.getMark());
+        AbstractGameBoard gameBoard = new ThreeInARowGameBoard(row, col);
+        gameBoard.placeMarker(1, 0, Player.PLAYER_1.getMarker());
+        gameBoard.placeMarker(1, 1, Player.PLAYER_1.getMarker());
+
 
         assertEquals(controller.getPlayer(), Player.PLAYER_1);
 
-        controller.setBlocksData(blockdata);
+        controller.setGameBoard(gameBoard);
         controller.move(((BoardButtonView) view).getBlockButton(1, 2));
 
         assertEquals(((TextView) view).getTextView().getText(), controller.PLAYER_1_WIN_MESSAGE);
@@ -104,13 +107,13 @@ public class TestExample {
      */
     @Test
     public void testHorizontalRowNoWinCondition() {
-        RowBlock[][] blockdata = getCleanBlockData();
-        blockdata[1][0].setContents(Player.PLAYER_2.getMark());
-        blockdata[1][1].setContents(Player.PLAYER_2.getMark());
+        AbstractGameBoard gameBoard = new ThreeInARowGameBoard(row, col);
+        gameBoard.placeMarker(1, 0, Player.PLAYER_2.getMarker());
+        gameBoard.placeMarker(1, 1, Player.PLAYER_2.getMarker());
 
         assertEquals(controller.getPlayer(), Player.PLAYER_1);
 
-        controller.setBlocksData(blockdata);
+        controller.setGameBoard(gameBoard);
         controller.move(((BoardButtonView) view).getBlockButton(1, 2));
 
         assertNotEquals(((TextView) view).getTextView().getText(), controller.PLAYER_2_WIN_MESSAGE);
@@ -123,13 +126,14 @@ public class TestExample {
      */
     @Test
     public void testAntiDiagonalWinCondition() {
-        RowBlock[][] blockdata = getCleanBlockData();
-        blockdata[2][0].setContents(Player.PLAYER_1.getMark());
-        blockdata[1][1].setContents(Player.PLAYER_1.getMark());
+        AbstractGameBoard gameBoard = new ThreeInARowGameBoard(row, col);
+        gameBoard.placeMarker(2, 0, Player.PLAYER_1.getMarker());
+        gameBoard.placeMarker(1, 1, Player.PLAYER_1.getMarker());
+
 
         assertEquals(controller.getPlayer(), Player.PLAYER_1);
 
-        controller.setBlocksData(blockdata);
+        controller.setGameBoard(gameBoard);
         controller.move(((BoardButtonView) view).getBlockButton(0, 2));
 
         assertEquals(((TextView) view).getTextView().getText(), controller.PLAYER_1_WIN_MESSAGE);
@@ -143,13 +147,14 @@ public class TestExample {
      */
     @Test
     public void testAntiDiagonalNoWinCondition() {
-        RowBlock[][] blockdata = getCleanBlockData();
-        blockdata[2][0].setContents(Player.PLAYER_2.getMark());
-        blockdata[1][1].setContents(Player.PLAYER_2.getMark());
+        AbstractGameBoard gameBoard = new ThreeInARowGameBoard(row, col);
+        gameBoard.placeMarker(2, 0, Player.PLAYER_2.getMarker());
+        gameBoard.placeMarker(1, 1, Player.PLAYER_2.getMarker());
+
 
         assertEquals(controller.getPlayer(), Player.PLAYER_1);
 
-        controller.setBlocksData(blockdata);
+        controller.setGameBoard(gameBoard);
         controller.move(((BoardButtonView) view).getBlockButton(0, 2));
 
         assertNotEquals(((TextView) view).getTextView().getText(), controller.PLAYER_2_WIN_MESSAGE);
@@ -164,13 +169,13 @@ public class TestExample {
      */
     @Test
     public void testMainDiagonalWinCondition() {
-        RowBlock[][] blockdata = getCleanBlockData();
-        blockdata[0][0].setContents(Player.PLAYER_1.getMark());
-        blockdata[1][1].setContents(Player.PLAYER_1.getMark());
+        AbstractGameBoard gameBoard = new ThreeInARowGameBoard(row, col);
+        gameBoard.placeMarker(0, 0, Player.PLAYER_1.getMarker());
+        gameBoard.placeMarker(1, 1, Player.PLAYER_1.getMarker());
 
         assertEquals(controller.getPlayer(), Player.PLAYER_1);
 
-        controller.setBlocksData(blockdata);
+        controller.setGameBoard(gameBoard);
         controller.move(((BoardButtonView) view).getBlockButton(2, 2));
 
         assertEquals(((TextView) view).getTextView().getText(), controller.PLAYER_1_WIN_MESSAGE);
@@ -183,11 +188,11 @@ public class TestExample {
      * */
     @Test
     public void testMainDiagonalNoWinCondition() {
-        RowBlock[][] blockdata = getCleanBlockData();
-        blockdata[0][0].setContents(Player.PLAYER_2.getMark());
-        blockdata[1][1].setContents(Player.PLAYER_2.getMark());
+        AbstractGameBoard gameBoard = new ThreeInARowGameBoard(row, col);
+        gameBoard.placeMarker(0, 0, Player.PLAYER_2.getMarker());
+        gameBoard.placeMarker(1, 1, Player.PLAYER_2.getMarker());
 
-        controller.setBlocksData(blockdata);
+        controller.setGameBoard(gameBoard);
         controller.move(((BoardButtonView) view).getBlockButton(2, 2));
 
         assertNotEquals(((TextView) view).getTextView().getText(), controller.PLAYER_1_WIN_MESSAGE);
@@ -202,19 +207,4 @@ public class TestExample {
         block.setContents(null);
     }
 
-
-    private RowBlock[][] getCleanBlockData(){
-        RowBlock[][] blockdata = new RowBlock[row][col];
-
-        for (int r = 0; r < row; r++) {
-            for (int c = 0; c < col; c++) {
-                blockdata[r][c] = new RowBlock(r, c);
-                blockdata[r][c].setContents("");
-                blockdata[r][c].setIsLegalMove(true);
-            }
-        }
-
-
-        return blockdata;
-    }
 }
