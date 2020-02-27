@@ -18,6 +18,7 @@ import static org.junit.Assert.*;
  */
 public class TestExample {
     private ThreeInARowController controller;
+    private AbstractGameBoard gameBoard;
     private BoardView view;
     private int row = 3;
     private int col = 3;
@@ -27,6 +28,8 @@ public class TestExample {
         view = new ThreeInARowBoardView(row,col);
         view.getGui().setVisible(false);
         controller = new ThreeInARowController(view,row, col);
+        gameBoard = new ThreeInARowGameBoard(row, col);
+        controller.setGameBoard(gameBoard);
 
     }
 
@@ -43,23 +46,30 @@ public class TestExample {
     }
 
 
+    @Test
+    public void testSwitchPlayer(){
+        controller.reset();
+        assertEquals(controller.getPlayer(), Player.PLAYER_1);
+
+        controller.move(((BoardButtonView) view).getBlockButton(2, 0));
+
+        assertEquals(controller.getPlayer(), Player.PLAYER_2);
+    }
 
     /**
      * Test controller's logic of checking a win by connecting a vertical row
      */
     @Test
     public void testVerticalRowWinCondition() {
-        AbstractGameBoard gameBoard = new ThreeInARowGameBoard(row, col);
+        gameBoard.reset();
         gameBoard.placeMarker(0, 0, Player.PLAYER_1.getMarker());
         gameBoard.placeMarker(1, 0, Player.PLAYER_1.getMarker());
 
         assertEquals(controller.getPlayer(), Player.PLAYER_1);
 
-        controller.setGameBoard(gameBoard);
         controller.move(((BoardButtonView) view).getBlockButton(2, 0));
 
         assertEquals(((TextView) view).getTextView().getText(), controller.PLAYER_1_WIN_MESSAGE);
-        controller.reset();
     }
 
     /**
@@ -68,7 +78,7 @@ public class TestExample {
      */
     @Test
     public void testVerticalRowNoWinCondition() {
-        AbstractGameBoard gameBoard = new ThreeInARowGameBoard(row, col);
+        gameBoard.reset();
         gameBoard.placeMarker(0, 0, Player.PLAYER_1.getMarker());
         gameBoard.placeMarker(1, 0, Player.PLAYER_1.getMarker());
 
@@ -78,7 +88,6 @@ public class TestExample {
         controller.move(((BoardButtonView) view).getBlockButton(2, 0));
 
         assertNotEquals(((TextView) view).getTextView().getText(), controller.PLAYER_2_WIN_MESSAGE);
-        controller.reset();
     }
 
 
@@ -87,7 +96,7 @@ public class TestExample {
      */
     @Test
     public void testHorizontalRowWinCondition() {
-        AbstractGameBoard gameBoard = new ThreeInARowGameBoard(row, col);
+        gameBoard.reset();
         gameBoard.placeMarker(1, 0, Player.PLAYER_1.getMarker());
         gameBoard.placeMarker(1, 1, Player.PLAYER_1.getMarker());
 
@@ -98,7 +107,6 @@ public class TestExample {
         controller.move(((BoardButtonView) view).getBlockButton(1, 2));
 
         assertEquals(((TextView) view).getTextView().getText(), controller.PLAYER_1_WIN_MESSAGE);
-        controller.reset();
 
     }
 
@@ -107,18 +115,15 @@ public class TestExample {
      */
     @Test
     public void testHorizontalRowNoWinCondition() {
-        AbstractGameBoard gameBoard = new ThreeInARowGameBoard(row, col);
+        gameBoard.reset();
         gameBoard.placeMarker(1, 0, Player.PLAYER_2.getMarker());
         gameBoard.placeMarker(1, 1, Player.PLAYER_2.getMarker());
 
         assertEquals(controller.getPlayer(), Player.PLAYER_1);
 
-        controller.setGameBoard(gameBoard);
         controller.move(((BoardButtonView) view).getBlockButton(1, 2));
 
         assertNotEquals(((TextView) view).getTextView().getText(), controller.PLAYER_2_WIN_MESSAGE);
-        controller.reset();
-
     }
 
     /**
@@ -126,19 +131,16 @@ public class TestExample {
      */
     @Test
     public void testAntiDiagonalWinCondition() {
-        AbstractGameBoard gameBoard = new ThreeInARowGameBoard(row, col);
+        gameBoard.reset();
         gameBoard.placeMarker(2, 0, Player.PLAYER_1.getMarker());
         gameBoard.placeMarker(1, 1, Player.PLAYER_1.getMarker());
 
 
         assertEquals(controller.getPlayer(), Player.PLAYER_1);
 
-        controller.setGameBoard(gameBoard);
         controller.move(((BoardButtonView) view).getBlockButton(0, 2));
 
         assertEquals(((TextView) view).getTextView().getText(), controller.PLAYER_1_WIN_MESSAGE);
-        controller.reset();
-
     }
 
 
@@ -147,19 +149,16 @@ public class TestExample {
      */
     @Test
     public void testAntiDiagonalNoWinCondition() {
-        AbstractGameBoard gameBoard = new ThreeInARowGameBoard(row, col);
+        gameBoard.reset();
         gameBoard.placeMarker(2, 0, Player.PLAYER_2.getMarker());
         gameBoard.placeMarker(1, 1, Player.PLAYER_2.getMarker());
 
 
         assertEquals(controller.getPlayer(), Player.PLAYER_1);
 
-        controller.setGameBoard(gameBoard);
         controller.move(((BoardButtonView) view).getBlockButton(0, 2));
 
         assertNotEquals(((TextView) view).getTextView().getText(), controller.PLAYER_2_WIN_MESSAGE);
-        controller.reset();
-
     }
 
 
@@ -169,18 +168,15 @@ public class TestExample {
      */
     @Test
     public void testMainDiagonalWinCondition() {
-        AbstractGameBoard gameBoard = new ThreeInARowGameBoard(row, col);
+        gameBoard.reset();
         gameBoard.placeMarker(0, 0, Player.PLAYER_1.getMarker());
         gameBoard.placeMarker(1, 1, Player.PLAYER_1.getMarker());
 
         assertEquals(controller.getPlayer(), Player.PLAYER_1);
 
-        controller.setGameBoard(gameBoard);
         controller.move(((BoardButtonView) view).getBlockButton(2, 2));
 
         assertEquals(((TextView) view).getTextView().getText(), controller.PLAYER_1_WIN_MESSAGE);
-        controller.reset();
-
     }
 
     /**
@@ -188,16 +184,13 @@ public class TestExample {
      * */
     @Test
     public void testMainDiagonalNoWinCondition() {
-        AbstractGameBoard gameBoard = new ThreeInARowGameBoard(row, col);
+        gameBoard.reset();
         gameBoard.placeMarker(0, 0, Player.PLAYER_2.getMarker());
         gameBoard.placeMarker(1, 1, Player.PLAYER_2.getMarker());
 
-        controller.setGameBoard(gameBoard);
         controller.move(((BoardButtonView) view).getBlockButton(2, 2));
 
         assertNotEquals(((TextView) view).getTextView().getText(), controller.PLAYER_1_WIN_MESSAGE);
-        controller.reset();
-
     }
 
 

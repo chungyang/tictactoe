@@ -39,6 +39,7 @@ public class ThreeInARowController {
 
 	public ThreeInARowController(BoardView boardView, int rowSize, int columnSize) {
 
+		checkRequiredViewType(boardView);
 		this.boardView = boardView;
 		this.gameBoard = new ThreeInARowGameBoard(rowSize, columnSize);
 		this.rowSize = rowSize;
@@ -115,6 +116,22 @@ public class ThreeInARowController {
 		blockButton.setEnabled(gameBoard.isLegalMove(row, column));
 	}
 
+
+	private void checkRequiredViewType(BoardView view){
+
+		if(!(view instanceof TextView)){
+			throw new IllegalArgumentException("View must be of TextView type");
+		}
+
+		if(!(view instanceof ResetButtonView)){
+			throw new IllegalArgumentException("View must be of ResetButtonView type");
+		}
+
+		if(!(view instanceof BoardButtonView)){
+			throw new IllegalArgumentException("View must be of BoardButtonView type");
+		}
+	}
+
 	/**
 	 * Ends the game disallowing further player turns.
 	 */
@@ -158,5 +175,6 @@ public class ThreeInARowController {
 		public void actionPerformed(ActionEvent e) {
 			move((BlockButton) e.getSource());
 		}
+
 	}
 }
