@@ -161,7 +161,7 @@ public class ThreeInARowController {
 	}
 
 	final class ResetController implements ListenerAdapter {
-		
+
 		@Override
 		public void performAction(Object o) {
 			reset();
