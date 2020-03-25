@@ -2,8 +2,7 @@ package controller;
 
 import model.*;
 import view.*;
-
-import java.awt.event.*;
+import view.BlockButton;
 
 
 
@@ -111,7 +110,7 @@ public class ThreeInARowController {
 	 * after one of the player's moves.
 	 */
 	protected void updateBlock(BoardButtonView boardButtonView, int row, int column) {
-		BlockButton blockButton = boardButtonView.getBlockButton(row, column);
+		BlockButton blockButton = (BlockButton) boardButtonView.getBlockButton(row, column);
 		blockButton.setText(gameBoard.getBlockContent(row, column));
 		blockButton.setEnabled(gameBoard.isLegalMove(row, column));
 	}
@@ -161,20 +160,19 @@ public class ThreeInARowController {
 		resetButtonView.addResetButtonListener(new ResetController());
 	}
 
-	final class ResetController implements ActionListener {
-
+	final class ResetController implements ListenerAdapter {
+		
 		@Override
-		public void actionPerformed(ActionEvent e) {
+		public void performAction(Object o) {
 			reset();
 		}
 	}
 
-	final class BlockController implements ActionListener {
+	final class BlockController implements ListenerAdapter {
 
 		@Override
-		public void actionPerformed(ActionEvent e) {
-			move((BlockButton) e.getSource());
+		public void performAction(Object o) {
+			move((BlockButton) o);
 		}
-
 	}
 }

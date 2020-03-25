@@ -7,7 +7,9 @@ import javax.swing.*;
  */
 public interface TextView extends BoardView{
 
-    JTextArea getTextView();
+    String getText();
+
+    Object getTextView();
 
     void setTextView(String text);
 }

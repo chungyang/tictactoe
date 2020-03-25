@@ -7,5 +7,5 @@ import javax.swing.*;
  */
 public interface BoardView {
 
-    JFrame getGui();
+    void setVisible(boolean isVisible);
 }

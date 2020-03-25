@@ -1,10 +1,10 @@
 package view;
 
-import model.BlockButton;
 import model.Player;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 
@@ -54,46 +54,44 @@ public class ThreeInARowBoardView implements BoardButtonView, ResetButtonView, T
         gui.setVisible(true);
     }
 
-    public JTextArea getPlayerturn() {
-        return playerturn;
-    }
-
     @Override
     public BlockButton getResetButton(){
         return reset;
     }
 
-    @Override
-    public JFrame getGui(){
-        return gui;
-    }
 
     public BlockButton getBlockButton(int row, int col){
         return blocks[row][col];
     }
 
     @Override
-    public void addResetButtonListener(ActionListener listener) {
-        reset.addActionListener(listener);
+    public void addResetButtonListener(ListenerAdapter listener) {
+
+        reset.addActionListener((e)->listener.performAction(e.getSource()));
     }
 
     @Override
-    public void removeResetListener(ActionListener listener) {
-        reset.removeActionListener(listener);
+    public void removeResetListener(ListenerAdapter listener) {
+        reset.removeActionListener((e)->listener.performAction(e.getSource()));
     }
 
     @Override
-    public void addBlockButtonListener(ActionListener listener, int row, int col) {
-        blocks[row][col].addActionListener(listener);
+    public void addBlockButtonListener(ListenerAdapter listener, int row, int col) {
+        blocks[row][col].addActionListener((e)->listener.performAction(e.getSource()));
     }
 
     @Override
-    public void removeBlockButtonListener(ActionListener listener, int row, int col) {
-        blocks[row][col].removeActionListener(listener);
+    public void removeBlockButtonListener(ListenerAdapter listener, int row, int col) {
+        blocks[row][col].removeActionListener((e)->listener.performAction(e.getSource()));
     }
 
     @Override
-    public JTextArea getTextView() {
+    public String getText() {
+        return this.playerturn.getText();
+    }
+
+    @Override
+    public Object getTextView() {
         return playerturn;
     }
 
@@ -105,5 +103,10 @@ public class ThreeInARowBoardView implements BoardButtonView, ResetButtonView, T
     @Override
     public void setEnabled(boolean enabled, int row, int col){
         blocks[row][col].setEnabled(enabled);
+    }
+
+    @Override
+    public void setVisible(boolean isVisible) {
+        gui.setVisible(isVisible);
     }
 }

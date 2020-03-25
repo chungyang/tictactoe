@@ -6,10 +6,7 @@ import model.ThreeInARowGameBoard;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import view.BoardButtonView;
-import view.BoardView;
-import view.ThreeInARowBoardView;
-import view.TextView;
+import view.*;
 
 import static org.junit.Assert.*;
 
@@ -26,7 +23,7 @@ public class TestExample {
     @Before
     public void setUp() {
         view = new ThreeInARowBoardView(row,col);
-        view.getGui().setVisible(false);
+        view.setVisible(true);
         controller = new ThreeInARowController(view,row, col);
         gameBoard = new ThreeInARowGameBoard(row, col);
         controller.setGameBoard(gameBoard);
@@ -51,7 +48,7 @@ public class TestExample {
         controller.reset();
         assertEquals(controller.getPlayer(), Player.PLAYER_1);
 
-        controller.move(((BoardButtonView) view).getBlockButton(2, 0));
+        controller.move((BlockButton)((BoardButtonView) view).getBlockButton(2, 0));
 
         assertEquals(controller.getPlayer(), Player.PLAYER_2);
     }
@@ -67,9 +64,9 @@ public class TestExample {
 
         assertEquals(controller.getPlayer(), Player.PLAYER_1);
 
-        controller.move(((BoardButtonView) view).getBlockButton(2, 0));
+        controller.move((BlockButton)((BoardButtonView) view).getBlockButton(2, 0));
 
-        assertEquals(((TextView) view).getTextView().getText(), controller.PLAYER_1_WIN_MESSAGE);
+        assertEquals(((TextView) view).getText(), controller.PLAYER_1_WIN_MESSAGE);
     }
 
     /**
@@ -85,9 +82,9 @@ public class TestExample {
         assertEquals(controller.getPlayer(), Player.PLAYER_1);
 
         controller.setGameBoard(gameBoard);
-        controller.move(((BoardButtonView) view).getBlockButton(2, 0));
+        controller.move((BlockButton)((BoardButtonView) view).getBlockButton(2, 0));
 
-        assertNotEquals(((TextView) view).getTextView().getText(), controller.PLAYER_2_WIN_MESSAGE);
+        assertNotEquals(((TextView) view).getText(), controller.PLAYER_2_WIN_MESSAGE);
     }
 
 
@@ -104,9 +101,9 @@ public class TestExample {
         assertEquals(controller.getPlayer(), Player.PLAYER_1);
 
         controller.setGameBoard(gameBoard);
-        controller.move(((BoardButtonView) view).getBlockButton(1, 2));
+        controller.move((BlockButton)((BoardButtonView) view).getBlockButton(1, 2));
 
-        assertEquals(((TextView) view).getTextView().getText(), controller.PLAYER_1_WIN_MESSAGE);
+        assertEquals(((TextView) view).getText(), controller.PLAYER_1_WIN_MESSAGE);
 
     }
 
@@ -121,9 +118,9 @@ public class TestExample {
 
         assertEquals(controller.getPlayer(), Player.PLAYER_1);
 
-        controller.move(((BoardButtonView) view).getBlockButton(1, 2));
+        controller.move((BlockButton)((BoardButtonView) view).getBlockButton(1, 2));
 
-        assertNotEquals(((TextView) view).getTextView().getText(), controller.PLAYER_2_WIN_MESSAGE);
+        assertNotEquals(((TextView) view).getText(), controller.PLAYER_2_WIN_MESSAGE);
     }
 
     /**
@@ -138,9 +135,9 @@ public class TestExample {
 
         assertEquals(controller.getPlayer(), Player.PLAYER_1);
 
-        controller.move(((BoardButtonView) view).getBlockButton(0, 2));
+        controller.move((BlockButton)((BoardButtonView) view).getBlockButton(0, 2));
 
-        assertEquals(((TextView) view).getTextView().getText(), controller.PLAYER_1_WIN_MESSAGE);
+        assertEquals(((TextView) view).getText(), controller.PLAYER_1_WIN_MESSAGE);
     }
 
 
@@ -156,9 +153,9 @@ public class TestExample {
 
         assertEquals(controller.getPlayer(), Player.PLAYER_1);
 
-        controller.move(((BoardButtonView) view).getBlockButton(0, 2));
+        controller.move((BlockButton)((BoardButtonView) view).getBlockButton(0, 2));
 
-        assertNotEquals(((TextView) view).getTextView().getText(), controller.PLAYER_2_WIN_MESSAGE);
+        assertNotEquals(((TextView) view).getText(), controller.PLAYER_2_WIN_MESSAGE);
     }
 
 
@@ -174,9 +171,9 @@ public class TestExample {
 
         assertEquals(controller.getPlayer(), Player.PLAYER_1);
 
-        controller.move(((BoardButtonView) view).getBlockButton(2, 2));
+        controller.move((BlockButton)((BoardButtonView) view).getBlockButton(2, 2));
 
-        assertEquals(((TextView) view).getTextView().getText(), controller.PLAYER_1_WIN_MESSAGE);
+        assertEquals(((TextView) view).getText(), controller.PLAYER_1_WIN_MESSAGE);
     }
 
     /**
@@ -188,9 +185,9 @@ public class TestExample {
         gameBoard.placeMarker(0, 0, Player.PLAYER_2.getMarker());
         gameBoard.placeMarker(1, 1, Player.PLAYER_2.getMarker());
 
-        controller.move(((BoardButtonView) view).getBlockButton(2, 2));
+        controller.move((BlockButton)((BoardButtonView) view).getBlockButton(2, 2));
 
-        assertNotEquals(((TextView) view).getTextView().getText(), controller.PLAYER_1_WIN_MESSAGE);
+        assertNotEquals(((TextView) view).getText(), controller.PLAYER_1_WIN_MESSAGE);
     }
 
 

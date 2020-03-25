@@ -1,7 +1,5 @@
 package view;
 
-import model.BlockButton;
-
 import java.awt.event.ActionListener;
 
 /**
@@ -9,9 +7,9 @@ import java.awt.event.ActionListener;
  */
 public interface ResetButtonView extends BoardView{
 
-    void addResetButtonListener(ActionListener listener);
+    void addResetButtonListener(ListenerAdapter listener);
 
-    void removeResetListener(ActionListener listener);
+    void removeResetListener(ListenerAdapter listener);
 
-    BlockButton getResetButton();
+    Object getResetButton();
 }
